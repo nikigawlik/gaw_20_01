@@ -1,4 +1,5 @@
 import {waitForSeconds} from "./modules/timing.js"
+import * as player from "./modules/player.js"
 
 window.onload = async function() {
     init();
@@ -14,7 +15,7 @@ let backgroundStyle = "#203123"
 let virtualCanvasWidth = 100;
 let virtualCanvasHeight = 0; // changed later
 
-let gameObjects = [];
+let instances = [];
 let canvas = null;
 let ctx = null;
 
@@ -31,37 +32,35 @@ function init() {
     ctx = canvas.getContext("2d");
     clearScreen()
     main.append(canvas);
+
+    // event stuff
+    document.addEventListener('touchstart', e => e.preventDefault(), false);
+    canvas.onclick = () => {
+        //test
+        let p = player.create();
+        instances.push(p);
+    }
 }
 
 function step() {
     console.log("step");
-    for (const obj of gameObjects) {
-        update(obj);
+    for (const inst of instances) {
+        update(inst);
     }
     clearScreen();
-    for (const obj of gameObjects) {
-        render(obj);
-    }
-
-    // test
-    if(Math.random() < .01) {
-        gameObjects.push({
-            x: virtualCanvasWidth / 2 + (Math.random() * 2 - 1) * 20,
-            y: virtualCanvasHeight / 2 + (Math.random() * 2 - 1) * 20,
-            rad: Math.random() * 3 + 5,
-        })
+    for (const inst of instances) {
+        render(inst);
     }
 }
 
-function update(obj) {
-    obj.x += Math.random()*2-1;
-    obj.y += Math.random()*2-1;
+function update(inst) {
+    inst.step(inst);
 }
 
-function render(obj) {
-    const rad = obj.rad || 10;
-    const x = obj.x || 0;
-    const y = obj.y || 0;
+function render(inst) {
+    const rad = inst.rad || 10;
+    const x = inst.x || 0;
+    const y = inst.y || 0;
 
     const scale = canvas.width / virtualCanvasWidth;
 
