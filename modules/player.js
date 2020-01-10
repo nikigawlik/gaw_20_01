@@ -14,8 +14,8 @@ export function create(x = 50, y = 100) {
     return self;
 }
 
-export function step(inst) {
-    inst.x += inst.xSpd;
-    inst.y += inst.ySpd;
-    inst.ySpd += gravity;
+function step(self) {
+    self.x += self.xSpd;
+    self.y += self.ySpd;
+    self.ySpd += gravity;
 }
