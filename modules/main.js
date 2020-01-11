@@ -16,7 +16,7 @@ window.onload = async function() {
 export let virtualCanvasWidth = 100;
 export let virtualCanvasHeight = 0; // changed later
 
-let instances = [];
+export let instances = [];
 let canvas = null;
 
 export let viewX = 0;
@@ -41,13 +41,10 @@ function init() {
         if(!document.fullscreenElement) document.body.requestFullscreen();
     })
     window.addEventListener('resize', e => resizeCanvas());
-    canvas.onclick = () => {
-        //test
-        player.create(50, viewY + 100);
-    }
 
     // misc
-    generator.create();
+    generator.create(0, 100);
+    player.create(50, 120);
 }
 
 function step() {

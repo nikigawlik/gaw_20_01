@@ -8,20 +8,30 @@ export function create(x, y) {
         step: step,
         draw: draw,
         rad: 2,
+        tag: "obstacle",
         path: [[20, y], [80, y]],
-        cycleLength: 64 << Math.floor(Math.random()*4)
+        xSpd: 0,
+        ySpd: 0,
+        cycleLength: 128 << Math.floor(Math.random()*3),
+        cycleOffset: Math.floor(Math.random() * 4)/2,
     });
     return self;
 }
 
 function step(self) {
     let pathProgress = (frame % self.cycleLength) / self.cycleLength * self.path.length;
+    pathProgress = (pathProgress + self.cycleOffset) % self.path.length;
     let i = Math.floor(pathProgress);
     let p1 = self.path[i];
     let p2 = self.path[(i+1) % self.path.length];
     let frac = pathProgress - i;
+    let prevX = self.x;
+    let prevY = self.y;
+    frac = -Math.cos(frac * Math.PI)/2+0.5
     self.x = p1[0] * (1 - frac) + p2[0] * frac;
     self.y = p1[1] * (1 - frac) + p2[1] * frac;
+    self.xSpd = self.x - prevX;
+    self.ySpd = self.y - prevY;
 }
 
 function draw(self) {

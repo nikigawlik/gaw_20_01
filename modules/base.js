@@ -7,6 +7,7 @@ export function createInstance(x = 0, y = 0, rad = 0) {
         rad: rad,
         step: self => null,
         draw: self => null,
+        tag: "default",
     };
 
     main.addInstance(self);

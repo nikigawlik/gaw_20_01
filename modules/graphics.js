@@ -1,7 +1,7 @@
 
 import {virtualCanvasWidth, virtualCanvasHeight, viewX, viewY} from "./main.js"
-let canvas = null;
-let ctx = null;
+export let canvas = null;
+export let ctx = null;
 
 export function setCanvas(newCanvas, virtualCanvasWidth, virtualCanvasHeight) {
     canvas = newCanvas;
