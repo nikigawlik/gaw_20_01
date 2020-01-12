@@ -2,6 +2,8 @@ import {waitForSeconds, waitForFrame} from "./timing.js"
 import * as player from "./player.js"
 import * as graphics from "./graphics.js"
 import * as generator from "./generator.js"
+import { loadOverlay } from "./menus.js"
+import { KEY_CODES } from "./utils.js"
 
 window.onload = async function() {
     init();
@@ -25,6 +27,7 @@ export let viewY = 0;
 export let frame = 0;
 
 let verticalScroll = -0.15;
+let curPlayer = null;
 
 // update functions
 
@@ -42,17 +45,43 @@ function init() {
     })
     window.addEventListener('resize', e => resizeCanvas());
 
+    window.addEventListener('keyup', e => {
+        if(e.keyCode == KEY_CODES.ESCAPE) {
+            loadOverlay("tplMainMenu");
+        }
+    });
+
     // misc
+    resetGame();
+    // generator.create(0, 100);
+}
+
+export function resetGame() {
+    instances = [];
+    viewY = viewX = 0;
+    frame = 0;
     generator.create(0, 100);
-    player.create(50, 120);
+    curPlayer = player.create(50, 120);
+
 }
 
 function step() {
     console.log("step");
-    viewY += verticalScroll;
+
+    let scroll = verticalScroll;
+    if(curPlayer.y - viewY < 50) {
+        scroll *= 1.5;
+    }
+    if(curPlayer.y - viewY > 110) {
+        scroll /= 1.5;
+    }
+    
+    viewY += scroll;
+
     for (const inst of instances) {
         update(inst);
     }
+    graphics.update();
     drawBackground();
     for (const inst of instances) {
         graphics.instance(inst);

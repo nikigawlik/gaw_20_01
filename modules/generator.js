@@ -18,6 +18,7 @@ function step(self) {
         if(self.counter == 0) {
             inst.cycleLength = 256;
             inst.cycleOffset = 0.5;
+            console.log("COUNTER = 0")
         }
         self.counter++;
         self.y -= 26;
