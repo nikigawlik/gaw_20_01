@@ -29,7 +29,7 @@ export function create(x = 50, y = 100) {
 function init(self) {
     let supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
     graphics.canvas.addEventListener(supportsTouch? 'touchstart' : 'mousedown', () => jump(self));  
-    window.addEventListener('keyup', e => {
+    window.addEventListener('keydown', e => {
         if(e.keyCode == KEY_CODES.SPACE) {
             jump(self);
         }
