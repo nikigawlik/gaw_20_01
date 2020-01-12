@@ -1,6 +1,6 @@
 import * as base from "./base.js"
 import * as graphics from "./graphics.js"
-import { frame } from "./main.js";
+import { frame, viewY, destroy } from "./main.js";
 
 export function create(x, y, number) {
     let self = base.createInstance(x, y, 5);
@@ -33,6 +33,10 @@ function step(self) {
     self.y = p1[1] * (1 - frac) + p2[1] * frac;
     self.xSpd = self.x - prevX;
     self.ySpd = self.y - prevY;
+
+    if(self.y - viewY > 230) {
+        destroy(self);
+    }
 }
 
 function draw(self) {

@@ -2,7 +2,7 @@ import * as base from "./base.js"
 import * as graphics from "./graphics.js"
 import { collidesWithInstance, collidesWithInstanceAt } from "./collision.js";
 import { playCrash, playDing } from "./sound.js";
-import { viewX, viewY, virtualCanvasHeight, virtualCanvasWidth, instances, addScore } from "./main.js";
+import { viewX, viewY, virtualCanvasHeight, virtualCanvasWidth, instances, addScore, destroy } from "./main.js";
 import { loadOverlay } from "./menus.js";
 
 const gravity = 1/8;
@@ -87,6 +87,8 @@ function step(self) {
             self.ySpd -= jumpStrength;
             self.lastGrabbedAnchor = self.grabbedAnchor;
             self.grabbedAnchor = null;
+            
+            graphics.setShake(-self.xSpd * .5, -self.ySpd * .5);
 
             playCrash();
         }
@@ -95,7 +97,7 @@ function step(self) {
     // death check
     if(self.y > viewY + 210) {
         loadOverlay("tplMainMenu");
-        instances.splice(instances.indexOf(self), 1);
+        destroy(self);
     }
 }
 

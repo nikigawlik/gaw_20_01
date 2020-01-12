@@ -106,6 +106,11 @@ function update(inst) {
     inst.step(inst);
 }
 
+export function destroy(inst) {
+    let index = instances.indexOf(inst);
+    if(index >= 0) instances.splice(index, 1);
+}
+
 let backgroundStyle = "#203123"
 export function drawBackground() {
     graphics.clear(backgroundStyle);
