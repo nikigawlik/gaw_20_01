@@ -96,7 +96,7 @@ function step(self) {
 
     // death check
     if(self.y > viewY + 210) {
-        loadOverlay("tplMainMenu");
+        loadOverlay("tplGameOver");
         destroy(self);
     }
 }

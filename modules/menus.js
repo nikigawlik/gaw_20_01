@@ -25,6 +25,9 @@ export function clearOverlay() {
 }
 
 function setupEvents(container) {
+    let firstButton = container.querySelector("button")
+    if(firstButton) firstButton.focus();
+
     for(let b of container.querySelectorAll("button.restartRoom")) {
         b.onclick = e => {
             resetGame();

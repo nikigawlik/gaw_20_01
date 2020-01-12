@@ -64,7 +64,8 @@ function init() {
     });
 
     // misc
-    resetGame();
+    // resetGame();
+    loadOverlay("tplMainMenu")
     // generator.create(0, 100);
 }
 
@@ -75,18 +76,17 @@ export function resetGame() {
     setScore(0);
     generator.create(0, 100);
     curPlayer = player.create(50, 120);
-
 }
 
 function step() {
-    console.log("step");
-
     let scroll = verticalScroll;
-    if(curPlayer.y - viewY < 50) {
-        scroll *= 1.5;
-    }
-    if(curPlayer.y - viewY > 110) {
-        scroll /= 1.5;
+    if(curPlayer) {
+        if(curPlayer.y - viewY < 50) {
+            scroll *= 1.5;
+        }
+        if(curPlayer.y - viewY > 110) {
+            scroll /= 1.5;
+        }
     }
     
     viewY += scroll;
