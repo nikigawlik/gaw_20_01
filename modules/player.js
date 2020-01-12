@@ -4,6 +4,7 @@ import { collidesWithInstance, collidesWithInstanceAt } from "./collision.js";
 import { playCrash, playDing } from "./sound.js";
 import { viewX, viewY, virtualCanvasHeight, virtualCanvasWidth, instances, addScore, destroy } from "./main.js";
 import { loadOverlay } from "./menus.js";
+import { KEY_CODES } from "./utils.js";
 
 const gravity = 1/8;
 const jumpStrength = 3;
@@ -28,6 +29,11 @@ export function create(x = 50, y = 100) {
 function init(self) {
     let supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
     graphics.canvas.addEventListener(supportsTouch? 'touchstart' : 'mousedown', () => jump(self));  
+    window.addEventListener('keyup', e => {
+        if(e.keyCode == KEY_CODES.SPACE) {
+            jump(self);
+        }
+    })
 }
 
 function jump(self) {

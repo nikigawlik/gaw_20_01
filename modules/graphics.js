@@ -18,8 +18,8 @@ export function init() {
 }
 
 export function update() {
-    actualViewX = lerp(actualViewX, viewX, 0.5);
-    actualViewY = lerp(actualViewY, viewY, 0.5);
+    actualViewX = lerp(actualViewX, viewX, 0.125);
+    actualViewY = lerp(actualViewY, viewY, 0.125);
     const decay = .9;
     shakeX = decay * shakeX;
     shakeY = decay * shakeY;
