@@ -2,7 +2,7 @@ import * as base from "./base.js"
 import * as graphics from "./graphics.js"
 import { frame } from "./main.js";
 
-export function create(x, y) {
+export function create(x, y, number) {
     let self = base.createInstance(x, y, 5);
     Object.assign(self, {
         step: step,
@@ -14,6 +14,7 @@ export function create(x, y) {
         ySpd: 0,
         cycleLength: 128 << Math.floor(Math.random()*3),
         cycleOffset: Math.floor(Math.random() * 4)/2,
+        number: number,
     });
     return self;
 }

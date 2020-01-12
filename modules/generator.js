@@ -14,7 +14,7 @@ export function create(x=0, y=0) {
 
 function step(self) {
     if(self.y - viewY > -26) {
-        let inst = obstacle.create(viewX, self.y);
+        let inst = obstacle.create(viewX, self.y, self.counter);
         if(self.counter == 0) {
             inst.cycleLength = 256;
             inst.cycleOffset = 0.5;

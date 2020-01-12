@@ -1,8 +1,9 @@
 
-import {virtualCanvasWidth, virtualCanvasHeight, viewX, viewY} from "./main.js"
+import {virtualCanvasWidth, virtualCanvasHeight, viewX, viewY, score} from "./main.js"
 import { lerp } from "./utils.js";
 export let canvas = null;
 export let ctx = null;
+export const wallThickness = 3;
 
 let shakeX = 0;
 let shakeY = 0;
@@ -22,6 +23,21 @@ export function update() {
     const decay = .9;
     shakeX = decay * shakeX;
     shakeY = decay * shakeY;
+
+    // walls
+    line(viewX + wallThickness, viewY, viewX + wallThickness, viewY + virtualCanvasHeight);
+    line(viewX + virtualCanvasWidth - wallThickness, viewY, viewX + virtualCanvasWidth - wallThickness, viewY + virtualCanvasHeight);
+
+    // score
+    let scoreDigits = Math.max(Math.ceil(Math.log10(Math.max(score, 1))), 4);
+    let scoreString = "";
+    for(let i = 0; i < scoreDigits; i++) {
+        let number = Math.floor(score / 10**i) % 10
+        scoreString = `${number}${scoreString}`
+    }
+    let main = document.querySelector("main");
+    let scoreElement = main.querySelector(".scoreDisplay");
+    scoreElement.innerHTML = scoreString;
 }
 
 export function setCanvas(newCanvas, virtualCanvasWidth, virtualCanvasHeight) {

@@ -4,11 +4,16 @@
 
 /* game */
 body {
+    margin: 0;
+}
+
+.mainContainer {
     max-width: 67vh;
     margin: auto;
 }
 main {
     width: 100%;
+    position: relative;
 }
 
 main canvas {
@@ -35,6 +40,11 @@ main section {
     
     font-size: xx-large;
     color: white;
+    z-index: 100;
+}
+
+main section.front {
+    z-index: 101;
 }
 
 main section button {
@@ -42,4 +52,29 @@ main section button {
     color: white;
     background: rgba(0, 0, 0, 0);
     border: 2px solid white;
+    margin: 7px;
+}
+
+main section button:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+main .scoreDisplay {
+    font-weight: bold;
+    font-size: 2em;
+    padding: 7px;
+    background-color: #203123;
+}
+
+main .scoreDisplay {
+    pointer-events: none;
+}
+
+main .fullscreenBox {
+    right: 0;
+}
+
+main .fullscreenBox button {
+    padding: 0;
+    background-color: #203123;
 }

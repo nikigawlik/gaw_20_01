@@ -2,12 +2,11 @@ import * as base from "./base.js"
 import * as graphics from "./graphics.js"
 import { collidesWithInstance, collidesWithInstanceAt } from "./collision.js";
 import { playCrash, playDing } from "./sound.js";
-import { viewX, viewY, virtualCanvasHeight, virtualCanvasWidth, instances } from "./main.js";
+import { viewX, viewY, virtualCanvasHeight, virtualCanvasWidth, instances, addScore } from "./main.js";
 import { loadOverlay } from "./menus.js";
 
 const gravity = 1/8;
 const jumpStrength = 3;
-const wallThickness = 3;
 
 export function create(x = 50, y = 100) {
     let self = base.createInstance(x, y, 3.5);
@@ -21,6 +20,7 @@ export function create(x = 50, y = 100) {
         lastGrabbedAnchor: null,
         jumpFlag: false,
         snapToNext: true,
+        highestObstacleNumber: 0,
     })
     return self;
 }
@@ -42,7 +42,7 @@ function step(self) {
     self.ySpd += gravity;
 
     // wall collision
-    if(self.x - self.rad <= wallThickness || self.x + self.rad >= virtualCanvasWidth - wallThickness)  {
+    if(self.x - self.rad <= graphics.wallThickness || self.x + self.rad >= virtualCanvasWidth - graphics.wallThickness)  {
         self.xSpd *= -1;
         self.x = prevX;
     }
@@ -69,6 +69,11 @@ function step(self) {
             self.ySpd = 0;
             self.x = other.x;
             self.y = other.y;
+
+            if(other.number > self.highestObstacleNumber) {
+                self.highestObstacleNumber = other.number;
+                addScore(1);
+            }
 
             playDing();
         }
@@ -106,8 +111,4 @@ function draw(self) {
             self.y + Math.sin(off + a * (i+1)) * r
         )
     }
-
-    //walls
-    graphics.line(viewX + wallThickness, viewY, viewX + wallThickness, viewY + virtualCanvasHeight);
-    graphics.line(viewX + virtualCanvasWidth - wallThickness, viewY, viewX + virtualCanvasWidth - wallThickness, viewY + virtualCanvasHeight);
 }

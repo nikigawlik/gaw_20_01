@@ -26,6 +26,10 @@ export let viewY = 0;
 
 export let frame = 0;
 
+export let score = 0;
+export let setScore = a => { score = a};
+export let addScore = a => { score += a};
+
 let verticalScroll = -0.15;
 let curPlayer = null;
 
@@ -37,12 +41,20 @@ function init() {
     resizeCanvas();
     // create canvas
     let main = document.querySelector("main");
-    main.append(canvas);
+    let dummy = main.querySelector(".gameDummy")
+    main.insertBefore(canvas, dummy);
+    dummy.remove();
 
     // event stuff
-    document.addEventListener('touchstart', e => {
-        if(!document.fullscreenElement) document.body.requestFullscreen();
+    let fullscreenButton = main.querySelector(".fullscreenBox button");
+    fullscreenButton.addEventListener('click', e => {
+        if(!document.fullscreenElement) 
+            document.body.requestFullscreen();
     })
+    window.addEventListener('fullscreenchange', e => {
+        fullscreenButton.style.display = document.fullscreenElement? "none" : "block";
+    })
+
     window.addEventListener('resize', e => resizeCanvas());
 
     window.addEventListener('keyup', e => {
@@ -60,6 +72,7 @@ export function resetGame() {
     instances = [];
     viewY = viewX = 0;
     frame = 0;
+    setScore(0);
     generator.create(0, 100);
     curPlayer = player.create(50, 120);
 
@@ -81,8 +94,8 @@ function step() {
     for (const inst of instances) {
         update(inst);
     }
-    graphics.update();
     drawBackground();
+    graphics.update();
     for (const inst of instances) {
         graphics.instance(inst);
     }
